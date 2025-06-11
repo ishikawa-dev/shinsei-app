@@ -60,7 +60,7 @@ public interface THeaderRepository extends JpaRepository<T_HEADER, Integer>, Jpa
     	    FROM T_HEADER h
     	    JOIN T_USERS u ON h.user_id = u.user_id
     	    LEFT JOIN T_DETAILS d ON h.expense_id = d.expense_id
-    	    WHERE h.expense_id IN :expenseIds AND h.expense_flag = 1
+    	    WHERE h.expense_id IN (:expenseIds) AND h.expense_flag = 1
     	    GROUP BY h.expense_id, h.expense_month,h.submission_date,u.name
     	    """, nativeQuery = true)
     List<HeaderUserDTO> findSearchResult(@Param("expenseIds") List<Integer> expenseIds);
