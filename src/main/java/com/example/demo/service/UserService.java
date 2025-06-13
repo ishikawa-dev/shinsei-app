@@ -28,4 +28,18 @@ public class UserService {
 	   return userRepository.findAll();
    }
    
+	// ========================================================
+	// ユーザーIDで検索するメソッド
+	// ========================================================
+	public T_USERS findByUserId(String userId) {
+		return userRepository.findByUserId(userId);
+	}
+	
+	// ========================================================
+	// パスワードを新しいものに変更する
+	// ========================================================
+	public int updatePassword(String password,String userId) {
+		return userRepository.updatePassword(password,userId);
+	}
+   
 }

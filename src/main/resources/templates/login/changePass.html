@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+	<!--CSS読込-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/login/login.css}">
+	<!--JS読込-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	
+<title>パスワード変更</title>
+</head>
+<body class="bg-light">
+	
+	<script th:if="${confirmMessage != null}">
+		alert('[[${confirmMessage}]]');
+	</script>
+	
+	<div class="text-center">
+
+		<form method="post" th:action="@{/login/changePass}" th:object="${userForm}" class="form-login">
+			<h2>パスワード変更</h2>
+			<!--ユーザーID-->
+			<label>ユーザー名</label>
+			<div class="form-group">
+				<input type="text" th:field="*{userId}" class="form-control"/>
+			</div>
+			<!--現パスワード-->
+			<label>現在のパスワード</label>
+			<div class="form-group">
+				<input type="password" th:field="*{now_password}" class="form-control"/>
+			</div>
+			<!--新パスワード-->
+			<label>新しいパスワード</label>
+			<div class="form-group">
+				<input type="password" th:field="*{new_password}" class="form-control"/>
+			</div>
+			<!--確認用新パスワード-->
+			<label>新しいパスワード（※確認用）</label>
+			<div class="form-group">
+				<input type="password" th:field="*{new_password_again}" class="form-control"/>
+			</div>
+			
+			<input type="submit" value="確定" class="btn btn-primary"/>	
+		</form>
+		
+		<a th:href="@{/login/login}">ログイン画面へ戻る</a>
+		
+	</div>
+</body>
+</html>
