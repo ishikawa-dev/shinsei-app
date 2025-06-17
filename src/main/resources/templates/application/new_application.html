@@ -21,7 +21,6 @@
 			/* テーブルを中央に配置 */
 			border-collapse: collapse;
 		}
-
 		th,
 		td {
 			text-align: center;
@@ -29,23 +28,51 @@
 			padding: 10px;
 			/* セル内の余白 */
 		}
-
 		th {
 			background-color: #f2f2f2;
 			/* ヘッダーセルの背景色 */
 		}
-		
-		
+		.headerth{
+		    background-color: #f8f9fa;
+			/* ヘッダーセルの背景色 */
+		}
+		.table-title {
+		    margin-top: 30px;
+		    margin-bottom: 10px;
+		    font-weight: bold;
+		    font-size: 1.1rem;
+		}
+		.info-wrapper {
+		    background-color: #fdfdfd;
+		    border: 1px solid #ddd;
+		    padding: 16px;
+		    border-radius: 6px;
+		    max-width: 800px;
+		    margin: 0 auto 20px auto;
+		}
+
 	</style>
 </head>
 
 <body class="bg-light">
+	
 	<!-- ヘッダー部分 -->
-	<div class="d-flex justify-content-start align-items-center px-3 py-2 bg-light">
+	<div class="position-fixed top-0 end-0 bg-white border-bottom shadow-sm w-100 d-flex justify-content-end" style="z-index: 1050; padding: 0.5rem;">
+	  <p class="mb-0 me-3 mr-2">ログイン者：<span th:text="${session.userName}">氏名</span></p>
+	  <a href="/mypage" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">戻る</a>
+	  <a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
+	</div>
+	
+	<!-- ヘッダー部分 -->
+	<!--<div class="d-flex justify-content-start align-items-center px-3 py-2 bg-light">
 		<p class="mb-0 me-3 mr-2">ログイン者：<span th:text="${session.userName}">氏名</span></p>
 		<a href="/mypage" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">戻る</a>
 		<a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
-	</div>
+	</div>-->
+	
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 80px;"></div>
+	
 	<div class="text-center">
 	    <form th:action="@{/application/saveTransport}" method="post">
 	        <!-- セッションにexpenseMonthがなければ、入力フォームを表示 -->
@@ -56,27 +83,27 @@
 	        </div>
 
 	        <!-- テーブルで情報を表示 -->
-	        <table class="info-table" style="margin: 0 auto; text-align: left;">
+	        <table class="info-table table-bordered" style="margin: 0 auto; text-align: left;">
 	            <!-- 申請タイトル（expenseMonth） -->
 	            <tr th:if="${expenseMonth}">
-	                <th>申請タイトル</th>
+	                <th class="headerth">申請タイトル</th>
 	                <td th:text="${expenseMonth}"></td>
 	            </tr>
 
 	            <tr th:if="${headerInfo != null and headerInfo.createdDate != null}">
-	                <th>入力日</th>
+					<th class="headerth">入力日</th>
 	                <td th:text="${#temporals.format(headerInfo.createdDate, 'yyyy/MM/dd')}"></td>
 	            </tr>
 	            <tr th:if="${headerInfo != null and headerInfo.submissionDate != null}">
-	                <th>申請日</th>
+	                <th class="headerth">申請日</th>
 	                <td th:text="${#temporals.format(headerInfo.submissionDate, 'yyyy/MM/dd')}"></td>
 	            </tr>
 	            <tr th:if="${headerInfo != null and headerInfo.paymentDate != null}">
-	                <th>支払日</th>
+	                <th class="headerth">支払日</th>
 	                <td th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
 	            </tr>
 	            <tr th:if="${headerInfo != null and headerInfo.approvalStatus != null}">
-	                <th>申請可否</th>
+	                <th class="headerth">申請可否</th>
 	                <td>
 	                    <span th:if="${headerInfo.approvalStatus == 0}">未申請</span>
 	                    <span th:if="${headerInfo.approvalStatus == 1}">却下</span>
@@ -122,12 +149,12 @@
 
 			<!--申請内容選択部分-->
 			<div class="table table-bordered">
-				<h4>単発交通費</h4>
+				<h4 class="table-title">単発交通費</h4>
 				<!-- ① トリガーボタン -->
 				<!-- セッションに値がない場合のみ追加ボタンを表示 -->
 				<div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-					<button type="button" onclick="handleSTAddClick()">追加</button>
-					<button type="button" onclick="handleCopyClick()">コピー</button>	
+					<button type="button" class="btn-light" onclick="handleSTAddClick()">追加</button>
+					<button type="button" class="btn-light" onclick="handleCopyClick()">コピー</button>	
 				</div>
 				<!-- セッションに値がある場合はボタンを表示しない -->
 				<div th:if="${checkAppStatus == 1}">
@@ -177,11 +204,11 @@
 					</div>
 				</table>
 
-				<h4>定期交通費</h4>
+				<h4 class="table-title">定期交通費</h4>
 				<!-- セッションに値がない場合のみ追加ボタンを表示 -->
 				<div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-					<button type="button" onclick="handleCTAddClick()">追加</button>
-					<button type="button" onclick="handleCopyClick()">コピー</button>	
+					<button type="button" class="btn-light" onclick="handleCTAddClick()">追加</button>
+					<button type="button" class="btn-light" onclick="handleCopyClick()">コピー</button>	
 				</div>
 				<!-- セッションに値がある場合はボタンを表示しない -->
 				<div th:if="${checkAppStatus == 1}">
@@ -232,11 +259,11 @@
 					</div>
 				</table>
 
-				<h4>業務経費</h4>
+				<h4 class="table-title">業務経費</h4>
 				<!-- セッションに値がない場合のみ追加ボタンを表示 -->
 				<div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-					<button type="button" onclick="handleBEAddClick()">追加</button>
-					<button type="button" onclick="handleCopyClick()">コピー</button>	
+					<button type="button" class="btn-light" onclick="handleBEAddClick()">追加</button>
+					<button type="button" class="btn-light" onclick="handleCopyClick()">コピー</button>	
 				</div>
 				<!-- セッションに値がある場合はボタンを表示しない -->
 				<div th:if="${checkAppStatus == 1}">

@@ -58,6 +58,7 @@ public class AdminPageController {
 		List<HeaderUserDTO> applicationList = appService.findApprovalStatusTHREE();
 		model.addAttribute("searchResult", applicationList);
 		session.setAttribute("searchResult", applicationList);
+        model.addAttribute("selectedStatus", 3);
 		
 		return "admin/mypage";
 	}
@@ -155,7 +156,13 @@ public class AdminPageController {
 						 @RequestParam("submissionDateFrom") String submissionDateFrom,
 						 @RequestParam("submissionDateTo") String submissionDateTo,
 						 @RequestParam("approvalStatus") String approvalStatus,
-						 Model model,HttpSession session) {
+						 Model model,HttpSession session,
+						 @RequestParam("action") String action) {
+		
+		if("reset".equals(action)) {
+			session.removeAttribute("searchResult");
+			return "admin/mypage";
+		}
 	
 	    // いずれかの検索条件が入っているかをチェック
 	    boolean hasCondition = (userId != null && !userId.isEmpty())
@@ -184,6 +191,10 @@ public class AdminPageController {
 	        // 検索結果をモデルにセットしてビューに渡す
 	        model.addAttribute("searchResult", searchResult);
 	        session.setAttribute("searchResult", searchResult);
+	        model.addAttribute("selectedUserId", userId);
+	        model.addAttribute("submissionDateFrom", submissionDateFrom);
+	        model.addAttribute("submissionDateTo", submissionDateTo);
+	        model.addAttribute("selectedStatus", approvalStatus);
 	    } else {
 	        // 全件取得
 	    	results = thRepository.findAll();

@@ -29,44 +29,59 @@
     <div class="d-flex justify-content-center">
       <div class="w-100" style="max-width: 900px;">
 
-        <!-- 検索フォーム -->
-        <form method="post" th:action="@{/admin/search}" class="card p-4 mb-4 shadow-sm">
-          <h5 class="mb-3">検索条件</h5>
-          <div class="row align-items-end g-3">
-			
-			<!-- 氏名 -->
-            <div class="col-lg-4 col-md-6">
-              <label class="form-label">氏名</label>
-              <select name="userId" class="form-select">
-                <option value="">--選択--</option>
-                <option th:each="employee : ${session.employeeList}" th:value="${employee.userId}" th:text="${employee.name}"></option>
-              </select>
-            </div>
-			<!-- 申請日 -->
-			<div class="col-lg-4 col-md-6">
-			  <label class="form-label">申請日（開始～終了）</label>
-			  <div class="input-group">
-			    <input type="date" name="submissionDateFrom" class="form-control" />
-			    <span class="input-group-text">～</span>
-			    <input type="date" name="submissionDateTo" class="form-control" />
-			  </div>
-			</div>
-			<!-- ステータス -->
-            <div class="col-lg-3 col-md-5">
-              <label class="form-label">ステータス</label>
-              <select name="approvalStatus" class="form-select">
-                <option value="">--選択--</option>
-                <option value="1">却下済</option>
-                <option value="2">支払済</option>
-                <option value="3" selected>申請中</option>
-              </select>
-            </div>
-          </div>
+		<!-- 検索フォーム -->
+		<form method="post" th:action="@{/admin/search}" class="card p-4 mb-4 shadow-sm">
+		  <h5 class="mb-3">検索条件</h5>
+
+		  <!-- 入力エリア -->
+		  <div class="row g-3">
+		    <!-- 氏名 -->
+		    <div class="col-lg-3 col-md-4 d-flex flex-column align-items-center justify-content-center">
+		      <label for="userId" class="form-label d-block mb-1">氏名</label>
+		      <select name="userId" id="userId" class="form-select">
+		        <option value="">--選択--</option>
+		        <option th:each="employee : ${session.employeeList}" 
+		                th:value="${employee.userId}" 
+		                th:text="${employee.name}"
+						th:selected="${employee.userId} == ${selectedUserId}">
+		        </option>
+		      </select>
+		    </div>
+
+		    <!-- 申請日 -->
+		    <div class="col-lg-6 col-md-8">
+		      <label class="form-label">申請日（開始～終了）</label>
+		      <div class="input-group">
+				<input type="date" name="submissionDateFrom" class="form-control"
+				       th:value="${submissionDateFrom}" />
+				<span class="input-group-text">～</span>
+				<input type="date" name="submissionDateTo" class="form-control"
+				       th:value="${submissionDateTo}" />
+		      </div>
+		    </div>
+
+		    <!-- ステータス -->
+		    <div class="col-lg-3 col-md-4 d-flex flex-column align-items-center justify-content-center">
+		      <label for="approvalStatus" class="form-label d-block mb-1">ステータス</label>
+		      <select name="approvalStatus" id="approvalStatus" class="form-select">
+		        <option value="">--選択--</option>
+				<option value="1" th:selected="${selectedStatus} == 1">却下済</option>
+				<option value="2" th:selected="${selectedStatus} == 2">支払済</option>
+				<option value="3" th:selected="${selectedStatus} == 3">申請中</option>
+		      </select>
+		    </div>
+		  </div>
+
+		  <!-- 検索ボタン（1段下に見せる） -->
+		  <div class="row mt-4">
+		    <div class="col text-end">
+		      <button type="submit" class="btn btn-primary" name="action" value="search">検索</button>
+			  <button type="submit" class="btn btn-light" name="action" value="reset">条件リセット</button>
+		    </div>
+		  </div>
 		  
-		  <!-- 検索ボタン -->
-          <div class="mr-4 text-end">
-            <button type="submit" class="btn btn-primary">検索</button>
-          </div>
+		  <!-- スペース用のダミーdiv -->
+		   <div style="height: 10px;"></div>
 		  
 		  <!-- 検索結果 -->
 		  <div class="card shadow-sm">
