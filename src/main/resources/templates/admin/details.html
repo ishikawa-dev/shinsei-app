@@ -76,6 +76,9 @@
 	<script th:if="${confirmMessage != null}">
 		alert('[[${confirmMessage}]]');
 	</script>
+	
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 20px;"></div>
 		
 	<h4 th:text="'合算金額：' + ${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '円'"></h4>
 		
