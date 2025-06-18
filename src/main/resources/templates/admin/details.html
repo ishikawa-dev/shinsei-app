@@ -205,14 +205,15 @@
 	
 	<!--画像クリックした時-->
 	<script>
-	  function openImage(el) {
-	    const imageUrl = el.getAttribute('data-img');
-	    if (imageUrl) {
-	      window.open(imageUrl, '_blank');
-	    } else {
-	      alert("画像が取得できませんでした");
-	    }
+	function openImage(el) {
+	  const imageUrl = el.getAttribute('data-img');
+	  if (imageUrl) {
+	    const newWindow = window.open();
+	    newWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;height:auto;">`);
+	  } else {
+	    alert("画像が取得できませんでした");
 	  }
+	}
 	</script>
 	
 </body>
