@@ -49,18 +49,11 @@
 	  <a href="/mypage" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">戻る</a>
 	  <a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
 	</div>
-	
-	<!-- ヘッダー部分 -->
-	<!--<div class="d-flex justify-content-start align-items-center px-3 py-2 bg-light">
-		<p class="mb-0 me-3 mr-2">ログイン者：<span th:text="${session.userName}">氏名</span></p>
-		<a href="/mypage" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">戻る</a>
-		<a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
-	</div>-->
-	
+
 	<!-- スペース用のダミーdiv -->
 	 <div style="height: 80px;"></div>
 	
-	<table class="headertable table-bordered text-center mx-auto" style="width: 30%;">
+	<table class="info-table table-bordered" style="margin: 0 auto; text-align: left;">
 	  <tr>
 	    <th class="headerth">申請タイトル</th>
 	    <td th:text="${headerInfo.expenseMonth}"></td>
@@ -91,6 +84,9 @@
 	<script th:if="${confirmMessage != null}">
 		alert('[[${confirmMessage}]]');
 	</script>
+	
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 20px;"></div>
 		
 	<h4 th:text="'合算金額：' + ${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '円'"></h4>
 	<form th:action="@{/mypage}" method="post" th:object="${appForm}">
@@ -121,8 +117,8 @@
 		<!-- ① トリガーボタン -->
 		<!-- セッションに値がない場合のみ追加ボタンを表示 -->
 		<div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-		    <button type="button" class="btn-light" onclick="handleSTAddClick()">追加</button>	
-			<button type="button" class="btn-light" onclick="handleCopyClick()">コピー</button>	
+		    <button type="button" class="btn-outline-secondary" onclick="handleSTAddClick()">追加</button>	
+			<button type="button" class="btn-outline-secondary" onclick="handleCopyClick()">コピー</button>	
 		</div>
 		<!-- セッションに値がある場合はボタンを表示しない -->
 		<div th:if="${checkAppStatus == 1}">
@@ -172,8 +168,8 @@
 		<!-- ① トリガーボタン -->
 		<!-- セッションに値がない場合のみ追加ボタンを表示 -->
 		<div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-		    <button type="button" class="btn-light" onclick="handleCTAddClick()">追加</button>	
-			<button type="button" class="btn-light" onclick="handleCopyClick()">コピー</button>	
+		    <button type="button" class="btn-outline-secondary" onclick="handleCTAddClick()">追加</button>	
+			<button type="button" class="btn-outline-secondary" onclick="handleCopyClick()">コピー</button>	
 		</div>
 		<!-- セッションに値がある場合はボタンを表示しない -->
 		<div th:if="${checkAppStatus == 1}">
@@ -220,8 +216,8 @@
 		<!-- ① トリガーボタン -->
 		<!-- セッションに値がない場合のみ追加ボタンを表示 -->
 		<div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-		    <button type="button" class="btn-light" onclick="handleBEAddClick()">追加</button>	
-			<button type="button" class="btn-light" onclick="handleCopyClick()">コピー</button>	
+		    <button type="button" class="btn-outline-secondary" onclick="handleBEAddClick()">追加</button>	
+			<button type="button" class="btn-outline-secondary" onclick="handleCopyClick()">コピー</button>	
 		</div>
 		<!-- セッションに値がある場合はボタンを表示しない -->
 		<div th:if="${checkAppStatus == 1}">
@@ -256,12 +252,16 @@
 					<td><span th:text="${getBE.amount}"></span></td>
 					<td><span th:text="${getBE.purpose}"></span></td>
 					<td>					
-						<!-- savedBEがnullでないことを確認 -->
-					    <span th:if="${savedBE != null and savedBE.receipt != null}">
-					        <img th:src="@{${savedBE.receipt}}" alt="領収書" style="max-width: 100px; max-height: 100px;" />
-					    </span>
-					    <!-- nullの場合の代替メッセージ -->
-					    <span th:if="${savedBE == null or savedBE.receipt == null}">-</span>
+						<span th:if="${getBE != null and getBE.base64Image != null}">
+							<img
+							    th:src="'data:image/png;base64,' + ${getBE.base64Image}"
+							    alt="領収書"
+							    style="max-width: 100px; max-height: 100px; cursor: pointer;"
+							    th:attr="data-img='data:image/png;base64,' + ${getBE.base64Image}"
+							    onclick="openImage(this)"
+							/>
+						</span>
+						<span th:if="${getBE == null or getBE.base64Image == null}">-</span>
 					</td>
 				</tr>
 			</tbody>
@@ -700,6 +700,19 @@
 
 		// モーダルを表示（Bootstrap 4）
 		$('#beModal').modal('show');
+	  }
+	}
+	</script>
+	
+	<!--画像クリックした時-->
+	<script>
+	function openImage(el) {
+	  const imageUrl = el.getAttribute('data-img');
+	  if (imageUrl) {
+	    const newWindow = window.open();
+	    newWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;height:auto;">`);
+	  } else {
+	    alert("画像が取得できませんでした");
 	  }
 	}
 	</script>
