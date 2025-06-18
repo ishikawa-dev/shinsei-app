@@ -1,5 +1,6 @@
 package com.example.demo.common;
 
+import java.util.Base64;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
@@ -31,11 +32,22 @@ public class DisplayInfoHelper{
 	    model.addAttribute("getCTDetails", getCTDetails);
 	    //業務経費ver
 	    List<T_DETAILS> getBEDetails = appService.getDBDisplayInfo(expenseId,3);
+	    //業務経費が存在する場合
+	    if(getBEDetails != null) {
+	    	//getBEDetailsからreceiptを取り出して、String型に変更する
+	        //String型にしたreceiptを再度getBEDetailsに戻す
+		    for (T_DETAILS detail : getBEDetails) {
+		        byte[] imageBytes = detail.getReceipt(); // ← DBのbyte[]画像
+	            String base64 = Base64.getEncoder().encodeToString(imageBytes);
+	            detail.setBase64Image(base64); // ← セットしておく
+		    }
+	    }
 	    session.setAttribute("getBEDetails", getBEDetails);
 	    model.addAttribute("getBEDetails", getBEDetails);
 	    
 		//合算金額の表示
 		int totalAmount = appService.totalAmountInfo(expenseId);
 		model.addAttribute("totalAmount", totalAmount);
+		
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -8,8 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+
+import org.hibernate.annotations.JdbcTypeCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,8 +62,10 @@ public class T_DETAILS {
 	@Column(name = "purpose")
 	private String purpose;
 	
-	@Column(name = "receipt")
-	private String receipt;
+	@Lob
+	@JdbcTypeCode(Types.VARBINARY)
+	@Column(name = "receipt", columnDefinition = "BYTEA")
+	private byte[] receipt;
 	
 	@Column(name = "receipt_uploaded_flag")
 	private int receiptUploadedFlag;
@@ -72,6 +78,9 @@ public class T_DETAILS {
 	
 	@Column(name = "save_Flag")
 	private int saveFlag;
+	
+	@Transient
+	private String base64Image;
 	
 	// 単発交通費用コンストラクタ
     public T_DETAILS(LocalDate usageDate, String transportationFacilities, String route,int roundTripFlag, BigDecimal amount, String purpose) {

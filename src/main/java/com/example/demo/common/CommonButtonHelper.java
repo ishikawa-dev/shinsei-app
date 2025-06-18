@@ -1,11 +1,6 @@
 package com.example.demo.common;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
@@ -240,8 +235,8 @@ public class CommonButtonHelper {
 		
 		T_DETAILS businessExpenseContent = new T_DETAILS();
 
-		//領収書のアップデートがある場合
-		if (!file.isEmpty()) {
+		//領収書のアップデートがある場合(エクリプス内に画像保存→ＤＢにパスを保存ver）
+		/*if (!file.isEmpty()) {
             // uploadフォルダが存在しない場合は作成
             File dir = new File(UPLOAD_DIR);
             if (!dir.exists()) dir.mkdirs();
@@ -257,8 +252,15 @@ public class CommonButtonHelper {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             
             businessExpenseContent.setReceipt(filePath);
-        }
+        }*/
 	    
+		//領収書のアップデートがある場合
+		if (!file.isEmpty()) {
+		    // MultipartFileのバイト配列を取得してエンティティにセットする
+		    byte[] receiptBytes = file.getBytes();
+		    businessExpenseContent.setReceipt(receiptBytes);
+		}
+		
 		//appFormの業務経費情報をエンティティに変換する
 	    businessExpenseContent.setExpenseId(expenseId);
 	    businessExpenseContent.setUsageDate(businessExpenseForm.getUsageDate());

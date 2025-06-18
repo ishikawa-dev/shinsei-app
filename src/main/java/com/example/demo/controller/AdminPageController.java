@@ -19,6 +19,7 @@ import com.example.demo.common.DisplayInfoHelper;
 import com.example.demo.dto.HeaderUserDTO;
 import com.example.demo.model.T_HEADER;
 import com.example.demo.model.T_USERS;
+import com.example.demo.repository.TDetailsRepository;
 import com.example.demo.repository.THeaderRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ApplicationService;
@@ -43,6 +44,9 @@ public class AdminPageController {
 	
 	@Autowired
 	private THeaderRepository thRepository;
+	
+	@Autowired
+	private TDetailsRepository tdRepository;
 	
 	@Autowired
 	private UserRepository userRepository;

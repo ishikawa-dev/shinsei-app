@@ -143,13 +143,17 @@
 					<td><span th:text="${getBE.otherExpenseItem}"></span></td>
 					<td><span th:text="${getBE.amount}"></span></td>
 					<td><span th:text="${getBE.purpose}"></span></td>
-					<td>					
-						<!-- savedBEがnullでないことを確認 -->
-					    <span th:if="${savedBE != null and savedBE.receipt != null}">
-					        <img th:src="@{${savedBE.receipt}}" alt="領収書" style="max-width: 100px; max-height: 100px;" />
+					<td>
+					    <span th:if="${getBE != null and getBE.base64Image != null}">
+							<img
+							    th:src="'data:image/png;base64,' + ${getBE.base64Image}"
+							    alt="領収書"
+							    style="max-width: 100px; max-height: 100px; cursor: pointer;"
+							    th:attr="data-img='data:image/png;base64,' + ${getBE.base64Image}"
+							    onclick="openImage(this)"
+							/>
 					    </span>
-					    <!-- nullの場合の代替メッセージ -->
-					    <span th:if="${savedBE == null or savedBE.receipt == null}">-</span>
+					    <span th:if="${getBE == null or getBE.base64Image == null}">-</span>
 					</td>
 				</tr>
 			</tbody>
@@ -197,6 +201,18 @@
 	  document.getElementById("rejectReason").value = reason;
 	  return true;
 	}
+	</script>
+	
+	<!--画像クリックした時-->
+	<script>
+	  function openImage(el) {
+	    const imageUrl = el.getAttribute('data-img');
+	    if (imageUrl) {
+	      window.open(imageUrl, '_blank');
+	    } else {
+	      alert("画像が取得できませんでした");
+	    }
+	  }
 	</script>
 	
 </body>

@@ -1,11 +1,6 @@
 package com.example.demo.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -321,33 +316,21 @@ public class CopyApplicationController {
 
 	    T_DETAILS businessExpenseContent = new T_DETAILS();
 		
-		MultipartFile  file = appForm.getReceipt(); // OK
+		MultipartFile  file = businessExpenseForm.getReceipt(); // OK
 		
 		//領収書のアップデートがある場合
 		if (!file.isEmpty()) {
-            // uploadフォルダが存在しない場合は作成
-            File dir = new File(UPLOAD_DIR);
-            if (!dir.exists()) dir.mkdirs();
-            
-            // ファイル名をユニークにする（例：タイムスタンプ付き）
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-
-            // 保存先のパス（Paths.get() で保存先のフルパスを作成。）
-            Path path = Paths.get(UPLOAD_DIR + fileName);
-            String filePath = path.toString();
-
-            // ファイル保存、すでに同じ名前のファイルがある場合は、上書き（REPLACE_EXISTING）
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            
-            businessExpenseContent.setReceipt(filePath);
-        }
+		    // MultipartFileのバイト配列を取得してエンティティにセットする
+		    byte[] receiptBytes = file.getBytes();
+		    businessExpenseContent.setReceipt(receiptBytes);
+		}
 	    
 		//appFormの単発交通費情報をエンティティに変換する
 		businessExpenseContent.setExpenseId(expenseId);
-		businessExpenseContent.setUsageDate(appForm.getUsageDate());
-		businessExpenseContent.setOtherExpenseItem(appForm.getOtherExpenseItem());
-		businessExpenseContent.setAmount(appForm.getAmount());
-	    businessExpenseContent.setPurpose(appForm.getPurpose());
+		businessExpenseContent.setUsageDate(businessExpenseForm.getUsageDate());
+		businessExpenseContent.setOtherExpenseItem(businessExpenseForm.getOtherExpenseItem());
+		businessExpenseContent.setAmount(businessExpenseForm.getAmount());
+	    businessExpenseContent.setPurpose(businessExpenseForm.getPurpose());
 	    businessExpenseContent.setExpenseType(3);		//経費種別→業務経費
 	    businessExpenseContent.setSaveFlag(0);			//保存フラグ→未保存
 	    
