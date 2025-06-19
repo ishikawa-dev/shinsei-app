@@ -13,6 +13,11 @@
 	
 <title>管理者用詳細画面</title>
 	<style>
+		.expense-table {
+		    min-width: 800px; /* 親より広く */
+		    margin: 0 auto;
+		    border-collapse: collapse;
+		}
         table {
             width: 50%; /* テーブルの幅を調整 */
             margin: 0 auto; /* テーブルを中央に配置 */
@@ -83,9 +88,11 @@
 	<h4 th:text="'合算金額：' + ${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '円'"></h4>
 		
 	<!--申請内容選択部分-->
-	<div class="table table-bordered">
-		<h4 class="table-title">単発交通費</h4>	
-		<table class="table table-bordered">
+	
+	<div class="custom-container" style="padding: 0 15px;">
+	  <h4 class="table-title">単発交通費</h4>
+	  <div class="table-responsive">
+	    <table class="expense-table table table-bordered">
 			<thead>
 			    <tr>
 			        <th>利用日</th>
@@ -110,9 +117,13 @@
 				</tr>
 			</tbody>
 		</table>
+	  </div>
+	  </div>
 		
-		<h4 class="table-title">定期交通費</h4>
-		<table class="table table-bordered">
+	  <div class="custom-container" style="padding: 0 15px;">
+	    <h4 class="table-title">定期交通費</h4>
+	    <div class="table-responsive">
+	      <table class="expense-table table table-bordered">
 			<thead>
 			    <tr>
 			        <th>適用開始日</th>
@@ -134,9 +145,13 @@
 				</tr>
 			</tbody>
 		</table>
-
-		<h4 class="table-title">業務経費</h4>
-		<table class="table table-bordered">
+		</div>
+	  </div>
+		
+	  <div class="custom-container" style="padding: 0 15px;">
+	    <h4 class="table-title">業務経費</h4>
+	    <div class="table-responsive">
+	      <table class="expense-table table table-bordered">
 			<thead>
 			    <tr>
 			        <th>利用日</th>
@@ -166,7 +181,9 @@
 					</td>
 				</tr>
 			</tbody>
-		</table>	
+		</table>
+		</div>
+		</div>	
 		
 		
 		<form id="approvalForm" method="post" action="/admin/details" value="approval">
