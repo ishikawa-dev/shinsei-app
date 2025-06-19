@@ -40,6 +40,33 @@
 		    font-weight: bold;
 		    font-size: 1.1rem;
 		}
+		.summary-table {
+		  width: 400px;
+		  margin: 0 auto;
+		  border-collapse: collapse;
+		  font-size: 14px;
+		  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		  border-radius: 8px;
+		  overflow: hidden;
+		}
+
+		.summary-table th,
+		.summary-table td {
+		  padding: 8px 12px;
+		  text-align: left;
+		  border-bottom: 1px solid #ddd;
+		}
+
+		.summary-table th {
+		  background-color: #f8f9fa;
+		  font-weight: 600;
+		  width: 40%;
+		  color: #333;
+		}
+
+		.summary-table td {
+		  background-color: #fff;
+		}
 	</style>
 </head>
 <body class="bg-light">
@@ -57,32 +84,30 @@
 	<!-- スペース用のダミーdiv -->
 	 <div style="height: 80px;"></div>
 	 
-	 
-	 <table class="info-table table-bordered" 
-	        style="margin: 0 auto; text-align: left; border-spacing: 0; border-collapse: collapse;">
+	 <table class="summary-table">
 	   <tr>
-	     <th class="headerth" style="padding: 4px 8px;">申請タイトル</th>
-	     <td style="padding: 4px 8px;" th:text="${headerInfo.expenseMonth}"></td>
+	     <th>申請タイトル</th>
+	     <td th:text="${headerInfo.expenseMonth}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.createdDate != null}">
-	     <th class="headerth" style="padding: 4px 8px;">入力日</th>
-	     <td style="padding: 4px 8px;" th:text="${#temporals.format(headerInfo.createdDate, 'yyyy/MM/dd')}"></td>
+	     <th>入力日</th>
+	     <td th:text="${#temporals.format(headerInfo.createdDate, 'yyyy/MM/dd')}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.submissionDate != null}">
-	     <th class="headerth" style="padding: 4px 8px;">申請日</th>
-	     <td style="padding: 4px 8px;" th:text="${#temporals.format(headerInfo.submissionDate, 'yyyy/MM/dd')}"></td>
+	     <th>申請日</th>
+	     <td th:text="${#temporals.format(headerInfo.submissionDate, 'yyyy/MM/dd')}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.paymentDate != null}">
-	     <th class="headerth" style="padding: 4px 8px;">支払日</th>
-	     <td style="padding: 4px 8px;" th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
+	     <th>支払日</th>
+	     <td th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.approvalStatus != null}">
-	     <th class="headerth" style="padding: 4px 8px;">申請可否</th>
+	     <th>申請可否</th>
 	     <td>
-	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 0}">未申請</span>
-	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 1}">却下</span>
-	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 2}">支払済</span>
-	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 3}">申請中</span>
+	       <span th:if="${headerInfo.approvalStatus == 0}">未申請</span>
+	       <span th:if="${headerInfo.approvalStatus == 1}">却下</span>
+	       <span th:if="${headerInfo.approvalStatus == 2}">支払済</span>
+	       <span th:if="${headerInfo.approvalStatus == 3}">申請中</span>
 	     </td>
 	   </tr>
 	 </table>
