@@ -58,7 +58,8 @@
 	<!-- スペース用のダミーdiv -->
 	 <div style="height: 80px;"></div>
 	
-	<table class="info-table table-bordered" style="margin: 0 auto; text-align: left;">
+	 <table class="info-table table-bordered" 
+	        style="margin: 0 auto; text-align: left; border-spacing: 0; border-collapse: collapse;">
 	  <tr>
 	    <th class="headerth">申請タイトル</th>
 	    <td th:text="${headerInfo.expenseMonth}"></td>
@@ -270,6 +271,9 @@
 		</div>
 		</div>
 	</form>
+	
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 20px;"></div>
 	
 	<!-- ② モーダル本体(単体交通費ver) -->
 	<div class="modal fade" id="stModal" tabindex="-1" aria-labelledby="stModalLabel" aria-hidden="true">
