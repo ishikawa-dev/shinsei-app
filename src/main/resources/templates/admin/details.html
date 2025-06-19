@@ -61,28 +61,28 @@
 	 <table class="info-table table-bordered" 
 	        style="margin: 0 auto; text-align: left; border-spacing: 0; border-collapse: collapse;">
 	   <tr>
-	     <th class="headerth">申請タイトル</th>
-	     <td th:text="${headerInfo.expenseMonth}"></td>
+	     <th class="headerth" style="padding: 4px 8px;">申請タイトル</th>
+	     <td style="padding: 4px 8px;" th:text="${headerInfo.expenseMonth}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.createdDate != null}">
-	     <th class="headerth">入力日</th>
-	     <td th:text="${#temporals.format(headerInfo.createdDate, 'yyyy/MM/dd')}"></td>
+	     <th class="headerth" style="padding: 4px 8px;">入力日</th>
+	     <td style="padding: 4px 8px;" th:text="${#temporals.format(headerInfo.createdDate, 'yyyy/MM/dd')}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.submissionDate != null}">
-	     <th class="headerth">申請日</th>
-	     <td th:text="${#temporals.format(headerInfo.submissionDate, 'yyyy/MM/dd')}"></td>
+	     <th class="headerth" style="padding: 4px 8px;">申請日</th>
+	     <td style="padding: 4px 8px;" th:text="${#temporals.format(headerInfo.submissionDate, 'yyyy/MM/dd')}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.paymentDate != null}">
-	     <th class="headerth">支払日</th>
-	     <td th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
+	     <th class="headerth" style="padding: 4px 8px;">支払日</th>
+	     <td style="padding: 4px 8px;" th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
 	   </tr>
 	   <tr th:if="${headerInfo != null and headerInfo.approvalStatus != null}">
-	     <th class="headerth">申請可否</th>
+	     <th class="headerth" style="padding: 4px 8px;">申請可否</th>
 	     <td>
-	       <span th:if="${headerInfo.approvalStatus == 0}">未申請</span>
-	       <span th:if="${headerInfo.approvalStatus == 1}">却下</span>
-	       <span th:if="${headerInfo.approvalStatus == 2}">支払済</span>
-	       <span th:if="${headerInfo.approvalStatus == 3}">申請中</span>
+	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 0}">未申請</span>
+	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 1}">却下</span>
+	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 2}">支払済</span>
+	       <span style="padding: 4px 8px;" th:if="${headerInfo.approvalStatus == 3}">申請中</span>
 	     </td>
 	   </tr>
 	 </table>
