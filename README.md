@@ -24,24 +24,51 @@
 
 【申請者用画面】
 - ログイン画面
-- 申請一覧（マイページ）  
+![login](images/login.png)
+
+
+- 申請一覧（マイページ） 
+![mypage](images/mypage.png)
+
+
 - 申請詳細画面
+![detail](images/detail-1.png)
+![detail](images/detail-2.png)
+
+
 - 新規申請フォーム  
+![modal](images/detail-3.png)
+
+
 - 領収書画像アップロード機能
+![modal](images/detail-5.png)
+
 
 【管理者用画面】
 - ログイン画面
+![login](images/admin-login.png)
+
+
 - 申請一覧（マイページ）
+![mypage](images/admin-mypage-2.png)
+
+
 - 申請詳細画面
+![detail](images/admin-detail-1.png)
+![detail](images/admin-detail-2.png)
+
+
 - 申請内容の承認・却下機能
+![detail](images/admin-detail-3.png)
+![detail](images/admin-detail-4.png)
 
 ## 🔗 GitHubリポジトリ
 
 https://github.com/ishikawa-dev/shinsei-app
 
-## 🚀 起動方法
+## 🚀 公開URL（Render）
 
 https://shinsei-app-2.onrender.com/login
 
-ログインID：19970914
+ログインID：19970914<br>
 パスワード：nnnn1111
