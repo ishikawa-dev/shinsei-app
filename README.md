@@ -43,7 +43,7 @@ https://github.com/ishikawa-dev/shinsei-app
 
 ## 🚀 起動方法
 
-```bash
-git clone https://github.com/your-account/expense-app.git
-cd expense-app
-./mvnw spring-boot:run
+https://shinsei-app-2.onrender.com/login
+
+ログインID：19970914
+パスワード：nnnn1111
