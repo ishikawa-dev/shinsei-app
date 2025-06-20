@@ -31,6 +31,7 @@
 <small>
 初期画面には表示した年に申請した申請一覧が表示されます。
 </small>
+
 ![mypage](images/mypage.png)
 
 
@@ -39,6 +40,7 @@
 各業務経費の「追加」「コピー（チェックボックスを入れた内容をコピーしてモーダル画面表示）」ボタンで入力ができます。<br>
 チェックボックスで選択→「削除」ボタンで削除したい行の削除ができます。
 </small>
+
 ![detail](images/detail-1.png)
 ![detail](images/detail-2.png)
 
