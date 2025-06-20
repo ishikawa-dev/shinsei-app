@@ -36,17 +36,6 @@
 		  <form th:action="@{/application/new}" method="get" class="mb-0 mr-3">
 		    <button type="submit" class="btn btn-primary">新規申請</button>
 		  </form>
-
-		  <!-- セレクトボックスのフォーム -->
-		  <!--<form th:action="@{/mypage/filter}" method="get" class="mb-0">
-		    <select name="expenseYear" class="form-select" onchange="this.form.submit()">
-		      <option th:each="uniqueYears : ${session.uniqueYears}"
-		              th:value="${uniqueYears}"
-		              th:text="${uniqueYears}"
-		              th:selected="${uniqueYears == session.latestYear}">
-		      </option>
-		    </select>
-		  </form>-->
 		  
 		  <!-- セレクトボックス、uniqueYears が null でなく、かつ空でない場合にだけ表示 -->
 		  <form th:if="${session.uniqueYears != null and !#lists.isEmpty(session.uniqueYears)}"
@@ -89,7 +78,7 @@
 				<div>
 				  <span th:text="${header.expenseMonth}"></span>
 				  <span> : </span>
-				  <span th:text="${header.totalAmount} + 円"></span>
+				  <span th:text="${#numbers.formatInteger(header.totalAmount, 1, 'COMMA')} + '円'"></span>
 				</div>
 				<!-- 2行目：入力日・申請日-->				
 				<div style="font-size: smaller;">
