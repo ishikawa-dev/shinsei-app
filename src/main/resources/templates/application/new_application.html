@@ -126,7 +126,7 @@
 			    <td th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
 			  </tr>
 			  <tr th:if="${headerInfo != null and headerInfo.approvalStatus != null}">
-			    <th>申請可否</th>
+			    <th>ステータス</th>
 			    <td>
 			      <span th:if="${headerInfo.approvalStatus == 0}">未申請</span>
 			      <span th:if="${headerInfo.approvalStatus == 1}">却下</span>

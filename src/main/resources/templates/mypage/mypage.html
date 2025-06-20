@@ -85,7 +85,7 @@
 				    <span>
 				      入力日: <span th:text="${#temporals.format(header.createdDate, 'yyyy/MM/dd')}"></span>
 				      <span style="margin-left: 1em;">
-				        申請日: <span th:text="${header.submissionDate != null ? #temporals.format(header.submissionDate, 'yyyy/MM/dd') : '-'}"></span>
+				      申請日: <span th:text="${header.submissionDate != null ? #temporals.format(header.submissionDate, 'yyyy/MM/dd') : '-'}"></span>
 				      </span>
 				    </span>
 				</div>
