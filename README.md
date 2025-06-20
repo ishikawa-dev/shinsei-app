@@ -35,8 +35,6 @@
 - 申請詳細画面
 - 申請内容の承認・却下機能
 
-（→ スクリーンショットを画像として貼る）
-
 ## 🔗 GitHubリポジトリ
 
 https://github.com/ishikawa-dev/shinsei-app
