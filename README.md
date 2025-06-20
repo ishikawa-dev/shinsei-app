@@ -89,5 +89,10 @@ https://github.com/ishikawa-dev/shinsei-app
 
 https://shinsei-app-2.onrender.com/login
 
+【通常ログイン（申請者用）】<br>
 ログインID：19970914<br>
-パスワード：nnnn1111
+パスワード：nnnn1111<br>
+
+【管理者用ログイン】<br>
+ログインID：admin<br>
+パスワード：admin<br>
