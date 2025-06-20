@@ -4,6 +4,7 @@
 
 このアプリは、社員が月ごとの交通費・業務経費をオンラインで申請できるシステムです。
 申請内容は管理者画面から確認・承認ができ、領収書画像のアップロードもサポートしています。
+本アプリはレスポンシブ対応しており、スマートフォンからも快適に申請・操作できます。
 
 ## 🎯 開発の目的
 
@@ -27,6 +28,9 @@
 
 ![login](images/login.png)
 
+- ログイン画面（スマホ表示）
+
+![login](images/login-mobile.png)
 
 - 申請一覧（マイページ）<br> 
 
@@ -91,7 +95,8 @@ https://github.com/ishikawa-dev/shinsei-app
 
 ## 🚀 公開URL（Render）
 
-https://shinsei-app-2.onrender.com/login
+https://shinsei-app-2.onrender.com/login<br>
+※無料枠使用のため初回読み込みに時間がかかることがあります
 
 【通常ログイン（申請者用）】<br>
 ログインID：19970914<br>
