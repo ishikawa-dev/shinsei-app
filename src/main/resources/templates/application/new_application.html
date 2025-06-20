@@ -90,7 +90,7 @@
 	
 	<!-- ヘッダー部分 -->
 	<div class="position-fixed top-0 end-0 bg-white border-bottom shadow-sm w-100 d-flex justify-content-end" style="z-index: 1050; padding: 0.5rem;">
-	  <p class="mb-0 me-3 mr-2"><span th:text="${session.userName}">氏名</span></p>
+	  <!--<p class="mb-0 me-3 mr-2"><span th:text="${session.userName}">氏名</span></p>-->
 	  <a href="/mypage" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">戻る</a>
 	  <a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
 	</div>
@@ -99,7 +99,7 @@
 	 <div style="height: 80px;"></div>
 	
 	<div class="text-center">
-	    <form th:action="@{/application/saveTransport}" method="post">
+	    <form id="titleForm" th:action="@{/application/saveTransport}" method="post">
 	        <!-- セッションにexpenseMonthがなければ、入力フォームを表示 -->
 	        <div th:unless="${expenseMonth}">
 	            <label for="expenseMonth">申請タイトル：</label>
@@ -149,14 +149,14 @@
 	<div th:if="${expenseMonth != null}">
 		<h4 th:text="'合算金額：' + ${#numbers.formatInteger(totalAmount ?: 0, 1, 'COMMA')} + '円'"></h4>
 
-		<form th:action="@{/application/saveTransport}" method="post" th:object="${appForm}">
+		<form id="detailForm" th:action="@{/application/saveTransport}" method="post" th:object="${appForm}">
 
 			<div class="d-flex justify-content-start">
 				<!-- 申請・保存・削除ボタン：申請可能な状態 -->
 				<div th:if="${(checkAppStatus == null or checkAppStatus == 0) and selectApplicationButton == 1}">
 					<button type="submit" class="btn btn-primary mr-2" name="action" value="apply">申請</button>
 					<button type="submit" class="btn btn-secondary mr-2" name="action" value="register">保存</button>
-					<button type="submit" class="btn btn-danger" name="action" value="delete">削除</button>
+					<button type="button" class="btn btn-danger" onclick="handleDeleteClick()">削除</button>
 				</div>
 
 				<!-- 保存・削除ボタン＋申請不可メッセージ：保存はできるが申請はまだ -->
@@ -164,7 +164,7 @@
 					th:if="${(checkAppStatus == null or checkAppStatus == 0) and (selectApplicationButton == null or selectApplicationButton == 0)}">
 					<p>保存をすると申請可能になります</p>
 					<button type="submit" class="btn btn-secondary mr-2" name="action" value="register">保存</button>
-					<button type="submit" class="btn btn-danger" name="action" value="delete">削除</button>
+					<button type="button" class="btn btn-danger" onclick="handleDeleteClick()">削除</button>
 				</div>
 
 				<!-- 申請済みメッセージのみ表示 -->
@@ -785,6 +785,34 @@
 		$('#beModal').modal('show');
 	  }
 	}
+	</script>
+	
+	<!--「削除」ボタン押下(共通)-->
+	<script>
+	  function handleDeleteClick() {
+	    // チェックボックスを取得
+		const selectedCheckboxes  = document.querySelectorAll('input[name="checkboxID"]:checked');
+	    //const isChecked = Array.from(checkboxes).some(cb => cb.checked);
+
+	    if (selectedCheckboxes.length == 0) {
+	      alert("削除する項目を1つ以上選択してください。");
+	      return;
+	    }
+
+	    // actionのhidden inputを作成して送信
+	    const form = document.getElementById("detailForm");
+	    let actionInput = form.querySelector('input[name="action"]');
+
+	    if (!actionInput) {
+	      actionInput = document.createElement("input");
+	      actionInput.setAttribute("type", "hidden");
+	      actionInput.setAttribute("name", "action");
+	      form.appendChild(actionInput);
+	    }
+
+	    actionInput.setAttribute("value", "delete");
+	    form.submit();
+	  }
 	</script>
 	
 	<!--画像クリックした時-->

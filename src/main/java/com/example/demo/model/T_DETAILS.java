@@ -56,7 +56,7 @@ public class T_DETAILS {
 	@Column(name = "round_trip_flag")
 	private int roundTripFlag;
 	
-	@Column(name = "amount")
+	@Column(name = "amount", precision = 10, scale = 0)
 	private BigDecimal amount;
 	
 	@Column(name = "purpose")
