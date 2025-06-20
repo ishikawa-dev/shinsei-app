@@ -24,6 +24,7 @@
 
 【申請者用画面】
 - ログイン画面
+
 ![login](images/login.png)
 
 
@@ -52,10 +53,12 @@
 
 
 - 領収書画像アップロード機能
+
 ![modal](images/detail-5.png)
 
 【管理者用画面】
 - ログイン画面
+
 ![login](images/admin-login.png)
 
 
@@ -67,6 +70,7 @@
 
 
 - 申請詳細画面
+
 ![detail](images/admin-detail-1.png)
 ![detail](images/admin-detail-2.png)
 
