@@ -7,6 +7,7 @@
 	<!--CSS読込-->
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/css/application/application.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<!--JS読込-->
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
@@ -168,8 +169,12 @@
 		  <h4 class="table-title">単発交通費</h4>
 
 		  <div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-		    <button type="button" class="btn btn-outline-secondary" onclick="handleSTAddClick()">追加</button>
-		    <button type="button" class="btn btn-outline-secondary" onclick="handleCopyClick()">コピー</button>
+			<button type="button" class="btn btn-outline-secondary" onclick="handleSTAddClick()" title="追加">
+			  <i class="fas fa-plus"></i> 
+			</button>
+			<button type="button" class="btn btn-outline-secondary" onclick="handleCopyClick()" title="コピー">
+			  <i class="fas fa-copy"></i> 
+			</button>
 		  </div>
 
 		  <div class="table-responsive">
@@ -220,8 +225,11 @@
 		    <h4 class="table-title">定期交通費</h4>
 
 		    <div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-		      <button type="button" class="btn btn-outline-secondary" onclick="handleCTAddClick()">追加</button>
-		      <button type="button" class="btn btn-outline-secondary" onclick="handleCopyClick()">コピー</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="handleCTAddClick()" title="追加">
+				  <i class="fas fa-plus"></i> 
+				</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="handleCopyClick()" title="コピー">
+				  <i class="fas fa-copy"></i> 
 		    </div>
 
 		    <div class="table-responsive">
@@ -269,8 +277,11 @@
 		    <h4 class="table-title">業務経費</h4>
 
 		    <div th:if="${checkAppStatus == null or checkAppStatus == 0}">
-		      <button type="button" class="btn btn-outline-secondary" onclick="handleBEAddClick()">追加</button>
-		      <button type="button" class="btn btn-outline-secondary" onclick="handleCopyClick()">コピー</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="handleBEAddClick()" title="追加">
+				  <i class="fas fa-plus"></i> 
+				</button>
+				<button type="button" class="btn btn-outline-secondary" onclick="handleCopyClick()" title="コピー">
+				  <i class="fas fa-copy"></i> 
 		    </div>
 
 		    <div class="table-responsive">
