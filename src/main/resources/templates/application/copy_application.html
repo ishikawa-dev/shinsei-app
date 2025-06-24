@@ -132,7 +132,15 @@
 	 <div style="height: 20px;"></div>
 	
 	<div th:if="${newExpenseMonth != null}">
-	<h4 th:text="'合算金額：' + ${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '円'"></h4>
+		
+		<div class="alert alert-info d-flex align-items-center shadow-sm px-4 py-2 mb-3"
+		     style="max-width: 480px; font-size: 1.3rem; font-weight: 700; border-left: 5px solid #0d6efd;">
+		  <i class="bi bi-cash-coin me-2 fs-4 text-primary"></i>
+		  <div>
+		    合算金額：
+		    <span th:text="${#numbers.formatInteger(totalAmount ?: 0, 1, 'COMMA')} + '円'"></span>
+		  </div>
+		</div>
 	
 	<form id="detailForm" th:action="@{/application/copy}" method="post" th:object="${appForm}">	
 		

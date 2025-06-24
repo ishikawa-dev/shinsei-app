@@ -53,23 +53,33 @@
 		  border-radius: 8px;
 		  overflow: hidden;
 		}
-
 		.summary-table th,
 		.summary-table td {
 		  padding: 8px 12px;
 		  text-align: left;
 		  border-bottom: 1px solid #ddd;
 		}
-
 		.summary-table th {
 		  background-color: #f8f9fa;
 		  font-weight: 600;
 		  width: 40%;
 		  color: #333;
 		}
-
 		.summary-table td {
 		  background-color: #fff;
+		}
+		.total-box {
+		  background: linear-gradient(90deg, #fef9f4, #fff);
+		  border: 1px solid #f0d9c6;
+		  border-left: 6px solid #ffb347;
+		  padding: 1rem;
+		  font-weight: bold;
+		  font-size: 1.2rem;
+		  border-radius: 0.5rem;
+		  margin-bottom: 1rem;
+		}
+		.total-box .yen {
+		  color: #d35400;
 		}
 	</style>
 </head>
@@ -119,8 +129,15 @@
 	
 	<!-- スペース用のダミーdiv -->
 	 <div style="height: 20px;"></div>
-		
-	<h4 th:text="'合算金額：' + ${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '円'"></h4>
+	 
+	 <div class="alert alert-info d-flex align-items-center shadow-sm px-4 py-2 mb-3"
+	      style="max-width: 480px; font-size: 1.3rem; font-weight: 700; border-left: 5px solid #0d6efd;">
+	   <i class="bi bi-cash-coin me-2 fs-4 text-primary"></i>
+	   <div>
+	     合算金額：<span th:text="${#numbers.formatInteger(totalAmount, 1, 'COMMA')} + '円'"></span>
+	   </div>
+	 </div>
+	
 	<form id="detailForm" th:action="@{/mypage}" method="post" th:object="${appForm}">
 		<div class="d-flex justify-content-start">
 			<!-- 申請・保存・削除ボタン：申請可能な状態 -->

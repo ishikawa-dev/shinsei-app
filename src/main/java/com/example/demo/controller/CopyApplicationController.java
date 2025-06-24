@@ -160,7 +160,7 @@ public class CopyApplicationController {
 			if(checkDate == 0) {
 				cbHelper.saveHelper(model, session, expenseId);
 			}else if(checkDate >= 1) {
-				model.addAttribute("confirmMessage", "利用日付や定期開始日、終了日が入力されていないデータがあるので保存できません。");
+				model.addAttribute("confirmMessage", "日付が入力されていないデータがあるので保存できません。");
 				//申請内容と合算金額の取得
 				diHelper.setupDisplayInfo(model, session, expenseId);
 				 
