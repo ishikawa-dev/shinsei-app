@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+	<!--CSS読込-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/mypage/mypage.css}">
+	<!--JS読込-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	
+<title>管理者用詳細画面</title>
+	<style>
+		.expense-table {
+		    min-width: 800px; /* 親より広く */
+		    margin: 0 auto;
+		    border-collapse: collapse;
+		}
+        table {
+            width: 50%; /* テーブルの幅を調整 */
+            margin: 0 auto; /* テーブルを中央に配置 */
+            border-collapse: collapse;
+        }
+		th, td {
+		    text-align: center; /* セル内を中央揃え */
+		    padding: 10px; /* セル内の余白 */
+		}
+		th {
+		    background-color: #f2f2f2; /* ヘッダーセルの背景色 */
+		}
+		.headerth{
+		    background-color: #f8f9fa;
+			/* ヘッダーセルの背景色 */
+		}
+		.table-title {
+		    margin-top: 30px;
+		    margin-bottom: 10px;
+		    font-weight: bold;
+		    font-size: 1.1rem;
+		}
+		.summary-table {
+		  width: 400px;
+		  margin: 0 auto;
+		  border-collapse: collapse;
+		  font-size: 14px;
+		  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		  border-radius: 8px;
+		  overflow: hidden;
+		}
+
+		.summary-table th,
+		.summary-table td {
+		  padding: 8px 12px;
+		  text-align: left;
+		  border-bottom: 1px solid #ddd;
+		}
+
+		.summary-table th {
+		  background-color: #f8f9fa;
+		  font-weight: 600;
+		  width: 40%;
+		  color: #333;
+		}
+
+		.summary-table td {
+		  background-color: #fff;
+		}
+	</style>
+</head>
+<body class="bg-light">
+	<!-- ヘッダー部分 -->
+	<div class="position-fixed top-0 end-0 bg-white border-bottom shadow-sm w-100 d-flex justify-content-end" style="z-index: 1050; padding: 0.5rem;">
+		<p class="mb-0 me-3 mr-2">従業員名：<span th:text="${session.userName}">氏名</span></p>
+		<a href="/admin/mypage" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">戻る</a>
+		<a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
+	</div>
+	
+	<script th:if="${confirmMessage != null}">
+	    alert('[[${confirmMessage}]]');
+	</script>
+
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 80px;"></div>
+	 
+	 <table class="summary-table">
+	   <tr>
+	     <th>申請タイトル</th>
+	     <td th:text="${headerInfo.expenseMonth}"></td>
+	   </tr>
+	   <tr th:if="${headerInfo != null and headerInfo.createdDate != null}">
+	     <th>入力日</th>
+	     <td th:text="${#temporals.format(headerInfo.createdDate, 'yyyy/MM/dd')}"></td>
+	   </tr>
+	   <tr th:if="${headerInfo != null and headerInfo.submissionDate != null}">
+	     <th>申請日</th>
+	     <td th:text="${#temporals.format(headerInfo.submissionDate, 'yyyy/MM/dd')}"></td>
+	   </tr>
+	   <tr th:if="${headerInfo != null and headerInfo.paymentDate != null}">
+	     <th>支払日</th>
+	     <td th:text="${#temporals.format(headerInfo.paymentDate, 'yyyy/MM/dd')}"></td>
+	   </tr>
+	   <tr th:if="${headerInfo != null and headerInfo.approvalStatus != null}">
+	     <th>ステータス</th>
+	     <td>
+	       <span th:if="${headerInfo.approvalStatus == 0}">未申請</span>
+	       <span th:if="${headerInfo.approvalStatus == 1}">却下</span>
+	       <span th:if="${headerInfo.approvalStatus == 2}">支払済</span>
+	       <span th:if="${headerInfo.approvalStatus == 3}">申請中</span>
+	     </td>
+	   </tr>
+	 </table>
+	
+	<script th:if="${confirmMessage != null}">
+		alert('[[${confirmMessage}]]');
+	</script>
+	
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 20px;"></div>
+		
+	 <div class="alert alert-info d-flex align-items-center shadow-sm px-4 py-2 mb-3"
+	      style="max-width: 480px; font-size: 1.3rem; font-weight: 700; border-left: 5px solid #0d6efd;">
+	   <i class="bi bi-cash-coin me-2 fs-4 text-primary"></i>
+	   <div>
+	     合算金額：
+	     <span th:text="${#numbers.formatInteger(totalAmount ?: 0, 1, 'COMMA')} + '円'"></span>
+	   </div>
+	 </div>
+	 
+	<!--申請内容選択部分-->
+	
+	<div class="custom-container" style="padding: 0 15px;">
+	  <h4 class="table-title">単発交通費</h4>
+	  <div class="table-responsive">
+	    <table class="expense-table table table-bordered">
+			<thead>
+			    <tr>
+			        <th>利用日</th>
+			        <th>利用交通機関</th>
+					<th>利用区間</th>
+					<th>往復or片道</th>
+					<th>利用金額</th>
+					<th>目的</th>						
+			    </tr>
+			</thead>
+			<tbody>
+				<tr th:each="getST : ${getSTDetails}">
+					<td><span th:text="${getST.usageDate != null ? #temporals.format(getST.usageDate, 'yyyy/MM/dd') : '日付未設定'}"></span></td>
+					<td><span th:text="${getST.transportationFacilities}"></span></td>
+					<td><span th:text="${getST.route}"></span></td>
+					<td>
+						<span th:if="${getST.roundTripFlag == 1}">片道</span>
+						<span th:if="${getST.roundTripFlag == 2}">往復</span>
+					</td>
+					<td><span th:text="${getST.amount}"></span></td>
+					<td><span th:text="${getST.purpose}"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	  </div>
+	  </div>
+		
+	  <div class="custom-container" style="padding: 0 15px;">
+	    <h4 class="table-title">定期交通費</h4>
+	    <div class="table-responsive">
+	      <table class="expense-table table table-bordered">
+			<thead>
+			    <tr>
+			        <th>適用開始日</th>
+					<th>適用終了日</th>
+			        <th>利用交通機関</th>
+					<th>利用区間</th>
+					<th>利用金額</th>
+					<th>目的</th>						
+			    </tr>
+			</thead>
+			<tbody>
+				<tr th:each="getCT : ${getCTDetails}">
+					<td><span th:text="${getCT.validFrom != null ? #temporals.format(getCT.validFrom, 'yyyy/MM/dd') : '日付未設定'}"></span></td>
+					<td><span th:text="${getCT.validUntil != null ? #temporals.format(getCT.validUntil, 'yyyy/MM/dd') : '日付未設定'}"></span></td>
+					<td><span th:text="${getCT.transportationFacilities}"></span></td>
+					<td><span th:text="${getCT.route}"></span></td>
+					<td><span th:text="${getCT.amount}"></span></td>
+					<td><span th:text="${getCT.purpose}"></span></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	  </div>
+		
+	  <div class="custom-container" style="padding: 0 15px;">
+	    <h4 class="table-title">業務経費</h4>
+	    <div class="table-responsive">
+	      <table class="expense-table table table-bordered">
+			<thead>
+			    <tr>
+			        <th>利用日</th>
+			        <th>項目</th>
+					<th>利用金額</th>
+					<th>目的</th>
+					<th>領収書</th>						
+			    </tr>
+			</thead>
+			<tbody>
+				<tr th:each="getBE : ${getBEDetails}">
+					<td><span th:text="${getBE.usageDate != null ? #temporals.format(getBE.usageDate, 'yyyy/MM/dd') : '日付未設定'}"></span></td>
+					<td><span th:text="${getBE.otherExpenseItem}"></span></td>
+					<td><span th:text="${getBE.amount}"></span></td>
+					<td><span th:text="${getBE.purpose}"></span></td>
+					<td>
+					    <span th:if="${getBE != null and getBE.base64Image != null}">
+							<img
+							    th:src="'data:image/png;base64,' + ${getBE.base64Image}"
+							    alt="領収書"
+							    style="max-width: 100px; max-height: 100px; cursor: pointer;"
+							    th:attr="data-img='data:image/png;base64,' + ${getBE.base64Image}"
+							    onclick="openImage(this)"
+							/>
+					    </span>
+					    <span th:if="${getBE == null or getBE.base64Image == null}">-</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		</div>	
+		
+		<!-- スペース用のダミーdiv -->
+		 <div style="height: 20px;"></div>
+		
+		<form id="approvalForm" method="post" action="/admin/details" value="approval">
+		  <!-- 隠しフィールドに支払日をセット -->
+		  <p th:unless="${checkApprovalStatus}">
+			  <input type="hidden" name="paymentDate" id="paymentDate" value="">
+			  <button type="submit" class="btn btn-primary mr-2" onclick="return onApprovalSubmit()">支払</button>
+			  <input type="hidden" name="rejectReason" id="rejectReason" value="">
+			  <button type="submit" class="btn btn-danger mr-2" onclick="return onDismissSubmit()">却下</button>
+		  </p> 
+		</form>
+		
+		<!-- スペース用のダミーdiv -->
+		 <div style="height: 20px;"></div>
+
+	</div>
+	
+	<!--支払ボタン押下-->
+	<script>
+	function onApprovalSubmit() {
+		  const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD" 形式の日付文字列を取得
+		  const paymentDate = prompt("支払日はいつで設定しますか？（例: 2025-06-01）", today);
+		  if (!paymentDate) {
+		    alert("支払日が未入力のため、処理をキャンセルしました。");
+		    return false; 
+		  }
+		  document.getElementById("paymentDate").value = paymentDate;
+		  return true;
+	}
+	</script>
+	
+	<!--却下ボタン押下-->
+	<script>
+	function onDismissSubmit() {
+	  const confirmReject = confirm("却下にしてもいいですか？");
+	  if (!confirmReject) {
+	    return false; // フォーム送信をキャンセル
+	  }
+	  const reason = prompt("却下理由を入力してください。");
+	  if (!reason) {
+	    alert("却下理由が未入力のため、処理をキャンセルしました。");
+	    return false;
+	  }
+	  document.getElementById("rejectReason").value = reason;
+	  return true;
+	}
+	</script>
+	
+	<!--画像クリックした時-->
+	<script>
+	function openImage(el) {
+	  const imageUrl = el.getAttribute('data-img');
+	  if (imageUrl) {
+	    const newWindow = window.open();
+	    newWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;height:auto;">`);
+	  } else {
+	    alert("画像が取得できませんでした");
+	  }
+	}
+	</script>
+	
+</body>
+</html>

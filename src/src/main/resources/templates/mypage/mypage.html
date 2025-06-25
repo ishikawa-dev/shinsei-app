@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+	<!--CSS読込-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/mypage/mypage.css}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+	<!--JS読込-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	
+<title>個人ページ</title>
+</head>
+<body class="bg-light">
+	
+	<!-- ヘッダー部分 -->
+	<div class="position-fixed top-0 end-0 bg-white border-bottom shadow-sm w-100 d-flex justify-content-end" style="z-index: 1050; padding: 0.5rem;">
+	  <p class="mb-0 me-3 mr-2">ユーザー名：<span th:text="${session.userName}">氏名</span></p>
+	  <a href="/logout" class="mb-0 text-primary mr-2" style="cursor: pointer; text-decoration: none;">ログアウト</a>
+	</div>
+	
+	<script th:if="${confirmMessage != null}">
+		alert('[[${confirmMessage}]]');
+	</script>
+	
+	<!-- スペース用のダミーdiv -->
+	 <div style="height: 80px;"></div>
+	
+	<div class="d-flex flex-column align-items-center justify-content-center mb-5 gap-5">
+		
+		<div class="d-flex align-items-center gap-2">
+		  <!-- 新規申請ボタン部分 -->
+		  <form th:action="@{/application/new}" method="get" class="mb-0 mr-3">
+		    <button type="submit" class="btn btn-primary">新規申請</button>
+		  </form>
+		  
+		  <!-- セレクトボックス、uniqueYears が null でなく、かつ空でない場合にだけ表示 -->
+		  <form th:if="${session.uniqueYears != null and !#lists.isEmpty(session.uniqueYears)}"
+		        th:action="@{/mypage/filter}" method="get" class="mb-0">
+		    <select name="expenseYear" class="form-select" onchange="this.form.submit()">
+		      <option th:each="uniqueYears : ${session.uniqueYears}"
+		              th:value="${uniqueYears}"
+		              th:text="${uniqueYears}"
+		              th:selected="${uniqueYears == session.latestYear}">
+		      </option>
+		    </select>
+		  </form>
+
+		</div>
+	  
+	  <!-- スペース用のダミーdiv -->
+	   <div style="height: 20px;"></div>
+	  
+	  <!-- カード部分 -->
+	  <div th:each="header : ${session.findApplicationCards}" class="card mb-3 p-3 application-card" style="max-width: 520px; width: 90vw;">
+	    <form th:action="@{/mypage/copyAndDelete}" method="post" class="w-100" onsubmit="return confirmDeleteIfNeeded(event)">
+	      <input type="hidden" name="expenseId" th:value="${header.expenseId}" />
+
+	      <!-- ボタンと内容を横並び -->
+	      <div class="d-flex justify-content-between align-items-center">
+	        
+	        <!-- 左側：申請内容 -->
+	        <div>
+				<!-- ステータス表示 -->
+				<div class="mb-1">
+				  <span th:if="${header.approvalStatus == 0}" class="badge bg-warning">未申請</span>
+				  <span th:if="${header.approvalStatus == 1}" class="badge bg-danger mr-2">却下</span>
+				  <span th:if="${header.approvalStatus == 2}" class="badge bg-success">支払済</span>
+				  <span th:if="${header.approvalStatus == 3}" class="badge bg-info">申請中</span>
+				  <span th:if="${header.dismissedReason != null}" th:text="${header.dismissedReason}" class="text-danger small"></span>
+				</div>
+
+			  <a th:href="@{/mypage/detail/{id}(id=${header.expenseId})}" class="text-decoration-none fw-bold text-dark">
+				<!-- 1行目：expenseMonthと金額 -->
+				<div>
+				  <span th:text="${header.expenseMonth}"></span>
+				  <span> : </span>
+				  <span th:text="${#numbers.formatInteger(header.totalAmount, 1, 'COMMA')} + '円'"></span>
+				</div>
+				<!-- 2行目：入力日・申請日-->				
+				<div style="font-size: smaller;">
+				    <span>
+				      入力日: <span th:text="${#temporals.format(header.createdDate, 'yyyy/MM/dd')}"></span>
+				      <span style="margin-left: 1em;">
+				      申請日: <span th:text="${header.submissionDate != null ? #temporals.format(header.submissionDate, 'yyyy/MM/dd') : '-'}"></span>
+				      </span>
+				    </span>
+				</div>
+			  </a>
+	        </div>
+
+	        <!-- 右側：ボタン -->
+	        <div class="d-flex gap-2">
+			  <div th:if="${header.approvalStatus == 0}">
+			    <button type="submit" name="action" value="delete" class="btn btn-outline-danger btn-sm" title="削除">
+			      <i class="bi bi-trash"></i>
+			    </button>
+			  </div>
+	          <button type="submit" name="action" value="copy" class="btn btn-outline-secondary btn-sm" title="コピーして新規申請">
+	            <i class="bi bi-files"></i>
+	          </button>
+	        </div>
+			
+	      </div>
+	    </form>
+	  </div>
+
+	  <script>
+	    function confirmDeleteIfNeeded(event) {
+	      const clickedButton = event.submitter;
+	      if (clickedButton && clickedButton.name === 'action' && clickedButton.value === 'delete') {
+	        return confirm('削除してもよろしいですか？');
+	      }
+	      return true;
+	    }
+	  </script>
+	  
+</body>
+</html>
