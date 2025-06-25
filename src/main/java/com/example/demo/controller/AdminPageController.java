@@ -217,7 +217,7 @@ public class AdminPageController {
 		    session.setAttribute("searchResult", searchResult);
 	    }
 
-		return "/admin/mypage";
+		return "admin/mypage";
 	}
 	
 }

@@ -50,7 +50,7 @@ public class ChangePassController {
 	        return "login/changePass";
 	    }
 
-	    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();	    
 	    if (!encoder.matches(now_password, user.getPassword())) {
 	        model.addAttribute("confirmMessage", "現在のパスワードが正しくありません");
 	        return "login/changePass";
@@ -60,6 +60,9 @@ public class ChangePassController {
 	    	model.addAttribute("confirmMessage", "新しいパスワードと確認用パスワードが一致しません");
 	        return "login/changePass";
 	    }
+	    
+
+
 
 	    // パスワード更新
 	    String hashed = encoder.encode(new_password);
