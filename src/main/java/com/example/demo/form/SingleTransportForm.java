@@ -3,6 +3,7 @@ package com.example.demo.form;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,6 +28,7 @@ public class SingleTransportForm {
     private Integer roundTripFlag;		//往復か片道か(例: 1=片道, 2=往復)
     
     @NotNull(message = "金額は必須です")
+    @Digits(integer = 10, fraction = 0, message = "金額は整数10桁以内で入力してください")
     private BigDecimal amount;		//利用金額
     
     private String purpose;		//利用目的

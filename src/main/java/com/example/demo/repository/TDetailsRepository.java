@@ -19,7 +19,7 @@ public interface TDetailsRepository extends JpaRepository<T_DETAILS, Integer> {
 	// ========================================================
 	// 申請IDと経費種別と保存フラグで申請内容を検索する
 	// ========================================================
-	@Query("SELECT t FROM T_DETAILS t WHERE t.expenseId = :expenseId AND t.expenseType = :expenseType")
+	@Query("SELECT t FROM T_DETAILS t WHERE t.expenseId = :expenseId AND t.expenseType = :expenseType ORDER BY t.usageDate ASC, t.validFrom ASC")
 	List<T_DETAILS> findSavedDetails(@Param("expenseId") int expenseId, @Param("expenseType") int expenseType);
 	
 	// ========================================================

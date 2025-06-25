@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -26,6 +27,7 @@ public class BusinessExpenseForm {
     private String otherExpenseItem;		//その他の項目
     
     @NotNull(message = "金額は必須です")
+    @Digits(integer = 10, fraction = 0, message = "金額は整数10桁以内で入力してください")
     private BigDecimal amount;		//利用金額
     
     @Size(min = 1, message = "利用目的は必須です")

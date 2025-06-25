@@ -186,6 +186,7 @@
 				<tr th:each="getST : ${getSTDetails}">
 					<td>
 						<input type="checkbox" name="checkboxID" th:field="*{checkboxID}" th:value="${getST.detailId}"
+						th:if="${checkAppStatus == null or checkAppStatus == 0}"
 						th:attr="
 						    data-usage-date=${#temporals.format(getST.usageDate, 'yyyy/MM/dd')},
 						    data-transportation=${getST.transportationFacilities},
@@ -240,6 +241,7 @@
 		      <tr th:each="getCT : ${getCTDetails}">
 		        <td>
 		          <input type="checkbox" name="checkboxID" th:field="*{checkboxID}" th:value="${getCT.detailId}"
+				  th:if="${checkAppStatus == null or checkAppStatus == 0}"
 		            th:attr="
 		              data-valid-from=${#temporals.format(getCT.validFrom, 'yyyy/MM/dd')},
 		              data-valid-until=${#temporals.format(getCT.validUntil, 'yyyy/MM/dd')},
@@ -291,6 +293,7 @@
 		      <tr th:each="getBE : ${getBEDetails}">
 		        <td>
 		          <input type="checkbox" name="checkboxID" th:field="*{checkboxID}" th:value="${getBE.detailId}"
+				  th:if="${checkAppStatus == null or checkAppStatus == 0}"
 		            th:attr="
 		              data-usage-date=${#temporals.format(getBE.usageDate, 'yyyy/MM/dd')},
 		              data-other-expense-item=${getBE.otherExpenseItem},

@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<T_USERS, String> {
 	// ========================================================
 	// T_USERSに登録されている従業員一覧を取得する
 	// ========================================================
-	List<T_USERS> findAll();
+	List<T_USERS> findAllByOrderByUserIdAsc();
 	
 	// ========================================================
 	// 申請IDを検索値としてユーザー名を取得する

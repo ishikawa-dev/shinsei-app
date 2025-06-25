@@ -25,7 +25,7 @@ public class UserService {
 	// T_USERSに登録されている従業員一覧を取得する
 	// ========================================================
    public List<T_USERS> employeeList(){
-	   return userRepository.findAll();
+	   return userRepository.findAllByOrderByUserIdAsc();
    }
    
 	// ========================================================
