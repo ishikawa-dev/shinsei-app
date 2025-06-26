@@ -28,7 +28,7 @@
 
 ![login](images/login.png)
 
-- ログイン画面（スマホ表示）
+- （スマホ表示）
 
 ![login](images/login-mobile.png)
 
@@ -38,6 +38,9 @@
 
 ![mypage](images/mypage.png)
 
+- （スマホ表示）
+
+![mypage](images/mypage-mobile.png)
 
 - 申請詳細画面<br>
 
@@ -48,6 +51,10 @@
 ![detail](images/detail-1.png)
 ![detail](images/detail-2.png)
 
+- （スマホ表示）
+
+![detail](images/detail-mobile-1.png)
+![detail](images/detail-mobile-2.png)
 
 - 新規申請フォーム  
 
@@ -55,16 +62,27 @@
 
 ![modal](images/detail-3.png)
 
+- （スマホ表示）
+
+![detail](images/detail-mobile-3.png)
 
 - 領収書画像アップロード機能
 
 ![modal](images/detail-5.png)
+
+- （スマホ表示）
+
+![detail](images/detail-mobile-5.png)
+
 
 **【管理者用画面】**
 - ログイン画面
 
 ![login](images/admin-login.png)
 
+- （スマホ表示）
+
+![login](images/admin-mobile-login.png)
 
 - 申請一覧（マイページ）
 
@@ -72,11 +90,19 @@
 
 ![mypage](images/admin-mypage-2.png)
 
+- （スマホ表示）
+
+![mypage](images/admin-moblie-mypage-2.png)
 
 - 申請詳細画面
 
 ![detail](images/admin-detail-1.png)
 ![detail](images/admin-detail-2.png)
+
+- （スマホ表示）
+
+![detail](images/admin-mobile-detail-1.png)
+![detail](images/admin-mobile-detail-2.png)
 
 
 - 申請内容の承認・却下機能
@@ -85,9 +111,18 @@
 
 ![detail](images/admin-detail-3.png)
 
+- （スマホ表示）
+
+![detail](images/admin-mobile-detail-3.png)
+
 ※却下：却下理由を入力すると却下が完了します。
 
 ![detail](images/admin-detail-4.png)
+
+- （スマホ表示）
+
+![detail](images/admin-mobile-detail-4.png)
+
 
 ## 🔗 GitHubリポジトリ
 
