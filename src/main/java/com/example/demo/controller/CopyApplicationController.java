@@ -161,6 +161,12 @@ public class CopyApplicationController {
 				cbHelper.saveHelper(model, session, expenseId);
 			}else if(checkDate >= 1) {
 				model.addAttribute("confirmMessage", "日付が入力されていないデータがあるので保存できません。");
+				
+				//ヘッダー情報の更新
+				T_HEADER updateHeaderInfo = appService.findHeaderByExpenseId(expenseId);
+				session.setAttribute("headerInfo", updateHeaderInfo);
+				model.addAttribute("headerInfo", updateHeaderInfo);
+				
 				//申請内容と合算金額の取得
 				diHelper.setupDisplayInfo(model, session, expenseId);
 				 
