@@ -402,7 +402,7 @@ public class CopyApplicationController {
 		}
 		
 		//業務経費
-		List<T_DETAILS> getBE = (List<T_DETAILS>)session.getAttribute("getBEDetails");
+		/*List<T_DETAILS> getBE = (List<T_DETAILS>)session.getAttribute("getBEDetails");
 		if(getBE != null) {
 			for(T_DETAILS x:getBE) {
 				T_DETAILS newBE = new T_DETAILS();
@@ -416,7 +416,7 @@ public class CopyApplicationController {
 				//DBへ追加
 				appService.saveApplication(newBE);
 			}
-		}
+		}*/
 	}
 
 }
